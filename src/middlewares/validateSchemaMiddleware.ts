@@ -1,6 +1,5 @@
 import { ObjectSchema } from "joi";
 import { NextFunction, Request, Response } from "express";
-import { ErrorInfo } from "./errorHandlerMiddleware";
 
 export function validateSchemaMiddleware(schema: ObjectSchema) {
   return (req: Request, res: Response, next: NextFunction) => {
@@ -12,7 +11,7 @@ export function validateSchemaMiddleware(schema: ObjectSchema) {
             const message = details.message.split(" ").splice(1).join(" ");
             return {[erro]:message}
         })
-      throw new ErrorInfo("error_unprocessable_entity", errors) 
+      return res.status(422).send(errors);
     }
     next();
   };
