@@ -4,18 +4,17 @@ import { faker } from "@faker-js/faker";
 export function __createUser(
     method : "signin" | "signup",
     emailMethod : "notRandom" | "random" | "wrong",
-    passwordMethod: "wrong" | "same",
-    confirmPasswordMethod? : "wrong" | "same"
+    passwordMethod: "wrong" | "right",
+    confirmPasswordMethod? : "wrong" | "right"
     ){
 
     const email = {
-        notrandom : "masterdev@icloud.com",
-        random : faker.internet.url(),
-        wrong : "masterdevicloud.com"
+        notRandom : "masterdev@icloud.com",
+        random : faker.internet.url()
     };
     const password = {
         right: "1234567890",
-        wrong: "12345678"
+        wrong: "1234567899"
     };
     
     const userData = {
@@ -30,8 +29,8 @@ export function __createUser(
 export async function __InsertUser(
     method : "signin" | "signup",
     emailMethod : "notRandom" | "random" | "wrong",
-    passwordMethod: "wrong" | "same",
-    confirmPasswordMethod? : "wrong" | "same"
+    passwordMethod: "wrong" | "right",
+    confirmPasswordMethod? : "wrong" | "right"
     ){
 
     const accountData = __createUser(method, emailMethod, passwordMethod, confirmPasswordMethod);
