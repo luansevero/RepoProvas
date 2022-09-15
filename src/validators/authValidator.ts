@@ -1,7 +1,7 @@
 import { User } from "@prisma/client";
 import * as authRepository from "../repositories/authRepository";
 import { ErrorInfo } from "../middlewares/errorHandlerMiddleware";
-import { compareSync } from "../utils/bcryptUtil.ts";
+import { compareSync } from "../utils/bcryptUtil";
 
 //SignUp
 export async function newEmail(email : string){
