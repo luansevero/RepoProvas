@@ -21,7 +21,7 @@ model User {
 
 model Category {
   id       Int    @id @default(autoincrement())
-  name     String
+  name     String @unique
   createAt String
   Test     Test[]
 
@@ -29,20 +29,20 @@ model Category {
 }
 
 model Term {
-  id         Int          @id @default(autoincrement())
-  number     String
+  id       Int      @id @default(autoincrement())
+  number   String   @unique
   createAt DateTime @default(now())
-  
+
   Discipline Discipline[]
 
   @@map("terms")
 }
 
 model Discipline {
-  id                Int                 @id @default(autoincrement())
-  name              String
-  Term              Term                @relation(fields: [termId], references: [id])
-  termId            Int
+  id       Int      @id @default(autoincrement())
+  name     String   @unique
+  Term     Term     @relation(fields: [termId], references: [id])
+  termId   Int
   createAt DateTime @default(now())
 
   TeacherDiscipline TeacherDiscipline[]
@@ -51,10 +51,10 @@ model Discipline {
 }
 
 model Teacher {
-  id                Int                 @id @default(autoincrement())
-  name              String
-  createAt          DateTime            @default(now())
-  
+  id       Int      @id @default(autoincrement())
+  name     String   @unique
+  createAt DateTime @default(now())
+
   TeacherDiscipline TeacherDiscipline[]
 
   @@map("teachers")
@@ -66,9 +66,9 @@ model TeacherDiscipline {
   teacherId    Int
   Discipline   Discipline @relation(fields: [disciplineId], references: [id])
   disciplineId Int
-  createAt DateTime @default(now())
+  createAt     DateTime   @default(now())
 
-  Test         Test[]
+  Test Test[]
 
   @@map("teachersDisciplines")
 }
@@ -81,7 +81,7 @@ model Test {
   categoryId          Int
   TeacherDiscipline   TeacherDiscipline @relation(fields: [teacherDisciplineId], references: [id])
   teacherDisciplineId Int
-  createAt DateTime @default(now())
+  createAt            DateTime          @default(now())
 
   @@map("tests")
 }
