@@ -23,5 +23,14 @@ export async function signup(createAuthData: TCreateAuthData) {
 export async function signin(authData: TAuthData){
     const user : User = await authValidator.accountEmail(authData["email"]);
     authValidator.samePassword(authData["password"], user["password"]);
-    // return jwt.sign({id:user["id"]}, process.env.ACESS_SECRET_TOKEN , {expiresIn: process.env.ACESS_SECRET_TOKEN});
-}
+    return createHeaders(user["id"]);
+};
+
+function createHeaders(userId : number){
+    const token : string = jwt.sign({id:userId}, process.env.ACESS_SECRET_TOKEN!, {expiresIn: process.env.TOKEN_EXPIRES_IN});
+    return {
+        headers : {
+            Authorization: `Bearer ${token}`
+        }
+    }
+};
