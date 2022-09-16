@@ -1,16 +1,17 @@
-import { prisma } from "../../src/config/database";
 import { faker } from "@faker-js/faker";
+import * as authRepository from "../../src/repositories/authRepository"
+import { hashSync } from "../../src/utils/bcryptUtil";
 
 export function __createUser(
     method : "signin" | "signup",
-    emailMethod : "notRandom" | "random" | "wrong",
+    emailMethod : "notRandom" | "random",
     passwordMethod: "wrong" | "right",
     confirmPasswordMethod? : "wrong" | "right"
     ){
 
     const email = {
-        notRandom : "masterdev@icloud.com",
-        random : faker.internet.url()
+        notRandom : "superultramasterdev@icloud.com",
+        random : faker.internet.email()
     };
     const password = {
         right: "1234567890",
@@ -28,15 +29,13 @@ export function __createUser(
 
 export async function __InsertUser(
     method : "signin" | "signup",
-    emailMethod : "notRandom" | "random" | "wrong",
+    emailMethod : "notRandom" | "random",
     passwordMethod: "wrong" | "right",
     confirmPasswordMethod? : "wrong" | "right"
     ){
 
     const accountData = __createUser(method, emailMethod, passwordMethod, confirmPasswordMethod);
-    if(method === "signup"){
-        const responseData = await prisma.user.create({data:accountData});
-        return responseData;
-    };
+    await authRepository.insert({email: accountData["email"], password: hashSync(accountData["password"], 10)})
+    return accountData;
 }
 

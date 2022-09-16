@@ -6,7 +6,6 @@ import * as authValidator from "../validators/authValidator";
 import * as authRepository from "../repositories/authRepository";
 import { TAuthData, TCreateAuthData } from "../types/authTypes";
 import { hashSync } from "../utils/bcryptUtil";
-import { string } from "joi";
 
 dotenv.config();
 
@@ -22,7 +21,7 @@ export async function signup(createAuthData: TCreateAuthData) {
 
 export async function signin(authData: TAuthData){
     const user : User = await authValidator.accountEmail(authData["email"]);
-    authValidator.samePassword(authData["password"], user["password"]);
+    authValidator.passwordSync(authData["password"], user["password"]);
     return createHeaders(user["id"]);
 };
 
