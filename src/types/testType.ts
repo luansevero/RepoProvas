@@ -1,6 +1,10 @@
 import { Test } from "@prisma/client";
 
-export type CreateTestType = Omit<Test, "id"| "createAt">
+export type TestDataType = Omit<Test, "id"| "createAt">
 
-export interface TTestData extends CreateTestType { "discipline": string, "teacher": string }
+export type CategoryAndDisciplineIdType = Omit <TestDataType, "name" | "pdfUrl">
+
+export interface CreateTestDataI extends TestDataType { "category":string , "discipline": string, "teacher": string, }
+
+export type CreateTestType = Omit<CreateTestDataI, "categoryId" | "teacherDisciplineId">
 

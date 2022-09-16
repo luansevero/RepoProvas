@@ -1,7 +1,5 @@
 import { prisma } from "../config/database";
-import { TeacherDiscipline } from "@prisma/client";
-
-type TFindUnique = Omit<TeacherDiscipline, "id" | "createAt">
+import { TFindUnique } from "../validators/teacherDisciplineValidator";
 
 export async function findByTeacherIdAndDisciplineId(teacherId_disciplineId : TFindUnique){
     return await prisma.teacherDiscipline.findUnique({

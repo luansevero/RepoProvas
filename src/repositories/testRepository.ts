@@ -1,8 +1,8 @@
 import { prisma } from "../config/database";
-import { CreateTestType } from "../types/testType";
+import { TestDataType } from "../types/testType";
 
-export async function insert(createTestData : CreateTestType){
+export async function insert(testData : TestDataType){
     return await prisma.test.create({
-        data : createTestData
+        data : testData
     })
-}
+};
