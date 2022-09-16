@@ -71,6 +71,7 @@ model TeacherDiscipline {
 
   Test Test[]
 
+  @@unique([teacherId, disciplineId])
   @@map("teachersDisciplines")
 }
 
