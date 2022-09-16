@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 
 export function __createTest(
         skill : "soft" | "hard",
-        fake? : "category" | "discipline" | "teacher"
+        fake? : "category" | "discipline" | "teacher" | "teacherDiscipline"
     ){
         const categories  = {
             "Projeto" : 1,
@@ -44,6 +44,9 @@ export function __createTest(
                 discipline : disciplineKey[faker.datatype.number({min: disciplineValues[0], max: disciplineValues["length"] - 1})],
                 teacher : teacherKey[faker.datatype.number({min: teacherValues[0], max: teacherValues["length"] - 1})]
         }  
-        if(fake !== undefined) return {...testBody, [fake]: faker.animal.dog()};
+        if(fake !== undefined){
+            if(fake !== "teacherDiscipline")  return {...testBody, [fake]: faker.animal.dog()};
+            return {...testBody, discipline : disciplines[skill === "soft" ? "hard" : "soft"][1]}
+        }
         return testBody;
 }
