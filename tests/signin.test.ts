@@ -5,10 +5,13 @@ import * as authFactory from "./factories/authFactory";
 
 const agent = supertest(app);
 
+beforeAll( async () => {
+    await prisma.$executeRaw`TRUNCATE TABLE "users"`
+})
+
 describe("Test POST /signin", () => {
     it("Must return [200] if is right account data and login",async () => {
         const accountData = await authFactory.__InsertUser("signin", "notRandom", "right", "right");
-        console.log(accountData)
         const response = await agent.post("/signin").send(accountData);
         expect(response.status).toBe(200);
     });

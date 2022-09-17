@@ -37,16 +37,17 @@ export function __createTest(
         const teacherKey = Object.keys(teachers[skill])
         const teacherValues = Object.values(teachers[skill]);
 
+
         const testBody = {
                 name : faker.name.fullName(),
                 pdfUrl: faker.internet.url(),
-                category: categoryKey[faker.datatype.number({min:categoryValues[0], max:categoryValues["length"] - 1})],
-                discipline : disciplineKey[faker.datatype.number({min: disciplineValues[0], max: disciplineValues["length"] - 1})],
-                teacher : teacherKey[faker.datatype.number({min: teacherValues[0], max: teacherValues["length"] - 1})]
+                category: categoryKey[(faker.datatype.number({min:categoryValues[0], max:categoryValues["length"]})) - 1],
+                discipline : disciplineKey[(faker.datatype.number({min: disciplineValues[0], max: disciplineValues["length"]})) - 1],
+                teacher : teacherKey[(faker.datatype.number({min: teacherValues[0], max: teacherValues["length"]})) - 1]
         }  
         if(fake !== undefined){
             if(fake !== "teacherDiscipline")  return {...testBody, [fake]: faker.animal.dog()};
-            return {...testBody, discipline : disciplines[skill === "soft" ? "hard" : "soft"][1]}
+            return {...testBody, discipline : Object.keys(disciplines[skill === "soft" ? "hard" : "soft"])[0]}
         }
         return testBody;
 }
