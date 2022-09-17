@@ -16,9 +16,9 @@ testRouter.get(
     testController.getByDiscipline
 );
 
-testRouter.get(
-    "/test",
-    testController.getByTeacher
-)
+// testRouter.get(
+//     "/test",
+//     testController.getByTeacher
+// )
 
 export default testRouter;

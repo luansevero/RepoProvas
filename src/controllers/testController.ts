@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import * as testTypes from "../types/testType";
 import * as testService from "../services/testService";
+import * as disciplineRepository from "../repositories/disciplineRepository";
 
 export async function create(req:Request, res:Response){
     const { name, pdfUrl, category, discipline, teacher } : testTypes.CreateTestType  = req.body;
@@ -9,10 +10,10 @@ export async function create(req:Request, res:Response){
 };
 
 export async function getByDiscipline(req:Request, res:Response) {
-    const allTests = await testService.getAllTestByDiscipline();
+    const allTests = await disciplineRepository.getTestByDiscipline();
     res.status(200).send(allTests)
 }
 
-export async function getByTeacher(req:Request, res:Response) {
+// export async function getByTeacher(req:Request, res:Response) {
     
-};
+// };

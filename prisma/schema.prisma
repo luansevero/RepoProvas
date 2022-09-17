@@ -24,7 +24,7 @@ model Category {
   id       Int      @id @default(autoincrement())
   name     String   @unique
   createAt DateTime @default(now())
-  Test     Test[]
+  test     Test[]
 
   @@map("categories")
 }
@@ -34,7 +34,7 @@ model Term {
   number   Int      @unique
   createAt DateTime @default(now())
 
-  Discipline Discipline[]
+  discipline Discipline[]
 
   @@map("terms")
 }
@@ -42,11 +42,11 @@ model Term {
 model Discipline {
   id       Int      @id @default(autoincrement())
   name     String   @unique
-  Term     Term     @relation(fields: [termId], references: [id])
+  term     Term     @relation(fields: [termId], references: [id])
   termId   Int
   createAt DateTime @default(now())
 
-  TeacherDiscipline TeacherDiscipline[]
+  teacherDiscipline TeacherDiscipline[]
 
   @@map("disciplines")
 }
@@ -56,20 +56,20 @@ model Teacher {
   name     String   @unique
   createAt DateTime @default(now())
 
-  TeacherDiscipline TeacherDiscipline[]
+  teacherDiscipline TeacherDiscipline[]
 
   @@map("teachers")
 }
 
 model TeacherDiscipline {
   id           Int        @id @default(autoincrement())
-  Teacher      Teacher    @relation(fields: [teacherId], references: [id])
+  teacher      Teacher    @relation(fields: [teacherId], references: [id])
   teacherId    Int
-  Discipline   Discipline @relation(fields: [disciplineId], references: [id])
+  discipline   Discipline @relation(fields: [disciplineId], references: [id])
   disciplineId Int
   createAt     DateTime   @default(now())
 
-  Test Test[]
+  test Test[]
 
   @@unique([teacherId, disciplineId])
   @@map("teachers_disciplines")
@@ -79,9 +79,9 @@ model Test {
   id                  Int               @id @default(autoincrement())
   name                String
   pdfUrl              String
-  Category            Category          @relation(fields: [categoryId], references: [id])
+  category            Category          @relation(fields: [categoryId], references: [id])
   categoryId          Int
-  TeacherDiscipline   TeacherDiscipline @relation(fields: [teacherDisciplineId], references: [id])
+  teacherDiscipline   TeacherDiscipline @relation(fields: [teacherDisciplineId], references: [id])
   teacherDisciplineId Int
   createAt            DateTime          @default(now())
 
