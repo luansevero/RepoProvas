@@ -12,6 +12,7 @@ const agent = supertest(app);
 describe("Testa POST /test/create",() => {
     it("Must return [201] if an account is sucessfuly registered",async () => {
         const testData = testFactory.__createTest("hard");
+        console.log(testData)
         const response = await agent.post("/test/create").send(testData);
         expect(response.status).toBe(201);
     });

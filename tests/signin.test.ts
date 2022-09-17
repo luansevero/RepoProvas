@@ -8,7 +8,6 @@ const agent = supertest(app);
 describe("Test POST /signin", () => {
     it("Must return [200] if is right account data and login",async () => {
         const accountData = await authFactory.__InsertUser("signin", "notRandom", "right", "right");
-        console.log(accountData)
         const response = await agent.post("/signin").send(accountData);
         expect(response.status).toBe(200);
     });
