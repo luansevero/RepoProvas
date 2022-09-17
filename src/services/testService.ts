@@ -6,9 +6,9 @@ import * as testRepository from "../repositories/testRepository"
 import { CreateTestType } from "../types/testType";
 
 export async function test(createTestData : CreateTestType){
-    const categoryId = await categoryValidator.findCategory(createTestData["name"]);
-    const teacherId = await teacherValidator.findTeacher(createTestData["name"]);
-    const disciplineId = await disciplineValidator.findDiscipline(createTestData["name"]);
+    const categoryId = await categoryValidator.findCategory(createTestData["category"]);
+    const teacherId = await teacherValidator.findTeacher(createTestData["teacher"]);
+    const disciplineId = await disciplineValidator.findDiscipline(createTestData["discipline"]);
     const teacherDisciplineId = await teacherDisciplineValidator.findTeacherDiscipline({teacherId, disciplineId})
 
     await testRepository.insert({

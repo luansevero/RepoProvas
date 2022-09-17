@@ -62,7 +62,7 @@ export async function disciplines() {
         await prisma.discipline.createMany({
             data: [
                 { name: "HTML e CSS", termId: 1 },
-                { name: "Javascript", termId: 2 },
+                { name: "JavaScript", termId: 2 },
                 { name: "React", termId: 3 },
                 { name: "Humildade", termId: 1 },
                 { name: "Planejamento", termId: 2 },
