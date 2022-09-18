@@ -12,13 +12,13 @@ testRouter.post(
 );
 
 testRouter.get(
-    "/test",
+    "/test/discipline",
     testController.getByDiscipline
 );
 
-// testRouter.get(
-//     "/test",
-//     testController.getByTeacher
-// )
+testRouter.get(
+    "/test/teacher",
+    testController.getByTeacher
+)
 
 export default testRouter;

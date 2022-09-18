@@ -8,3 +8,17 @@ export async function findByName(name : string){
         }
     })
 }
+
+export async function getAllTest() {
+    return await prisma.teacher.findMany({
+        select : {
+            id : true,
+            name : true,
+            teacherDiscipline : {
+            } 
+        },
+        orderBy : {
+            name : "asc"
+        }
+    })
+}

@@ -1,4 +1,3 @@
-import { string } from "joi";
 import { prisma } from "../config/database";
 
 export async function findByName(name : string){
@@ -10,7 +9,7 @@ export async function findByName(name : string){
     })
 }
 
-export async function getTestByDiscipline(){
+export async function getDiscipline(){
     return await prisma.term.findMany({
         select : {
             id : true,
@@ -18,42 +17,12 @@ export async function getTestByDiscipline(){
             discipline : {
                 select : {
                     id : true,
-                    name : true,
-                    teacherDiscipline : {
-                        select : {
-                            id : true,
-                            teacher : {
-                                select : {
-                                    name : true
-                                }
-                            },
-                            test : {
-                                select : {
-                                    id : true,
-                                    category : {
-                                        select : {
-                                            name : true
-                                        }
-                                    },
-                                    name : true,
-                                    pdfUrl : true
-                                },
-                                orderBy : {
-                                    category : {
-                                        name : "asc"
-                                    }
-                                }
-                            }
-                        },
-                        orderBy : {
-                            id : "asc"
-                        }
-                    }
+                    name : true
                 },
                 orderBy : {
                     name : "asc"
                 }
-            },
+            }
         },
         orderBy : {
             number : "asc"
