@@ -51,19 +51,3 @@ export async function getTest() {
         FROM terms t
     `
 }
-
-// SELECT c.id, c.name as category,
-// (
-//     SELECT
-//     ARRAY_AGG(
-//         jsonb_build_object(
-//             'id', t.id,
-//             'name', t.name,
-//             'pdfUrl', t."pdfUrl"
-//         )
-//     )
-//     FROM tests t
-//     WHERE t."categoryId" = c.id
-// ) AS tests
-// FROM categories c
-// ORDER BY c.name ASC
