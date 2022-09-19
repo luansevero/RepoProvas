@@ -20,4 +20,9 @@ export async function accountEmail(email : string){
 };
 export function passwordSync(typedPassword : string, accountPassword : string){
     if(!compareSync(typedPassword, accountPassword)) throw new ErrorInfo("error_forbidden", "Invalid email our password!");
+};
+
+export async function accountId(id : number){
+    const account : User | null = await authRepository.findById(id);
+    if(!account) throw new ErrorInfo("error_forbidden", "Invalid token");
 }
