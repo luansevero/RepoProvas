@@ -35,7 +35,7 @@ export async function __InsertUser(
     ){
 
     const accountData = __createUser(method, emailMethod, passwordMethod, confirmPasswordMethod);
-    await authRepository.insert({email: accountData["email"], password: hashSync(accountData["password"], 10)})
-    return accountData;
+    const insertedUser = await authRepository.insert({email: accountData["email"], password: hashSync(accountData["password"], 10)});
+    return {accountData, id:insertedUser["id"]};
 }
 

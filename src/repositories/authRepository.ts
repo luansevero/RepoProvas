@@ -14,7 +14,7 @@ export async function findById( id : number ){
 };
 
 export async function insert(authData : TAuthData){
-    await prisma.user.create({
+    return await prisma.user.create({
         data: authData
     })
 };

@@ -21,8 +21,6 @@ export async function test(createTestData : CreateTestType){
 }
 
 export async function getTestByDiscipline(){
-    const disciplines = await disciplineRepository.getDiscipline();
     const tests = await testRepository.getTest();
-    console.log(tests)
     return tests
 };

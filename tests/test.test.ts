@@ -3,10 +3,6 @@ import supertest from "supertest";
 import app from "../src/app";
 import * as testFactory from "./factories/testFactory";
 
-beforeEach(async () => {
-    await prisma.$executeRaw`TRUNCATE TABLE "users"`;
-});
-
 const agent = supertest(app);
 
 describe("Testa POST /test/create",() => {
