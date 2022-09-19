@@ -3,6 +3,7 @@ import * as disciplineValidator from "../validators/disciplineValidator";
 import * as teacherValidator from "../validators/teacherValidator";
 import * as teacherDisciplineValidator from "../validators/teacherDisciplineValidator";
 import * as testRepository from "../repositories/testRepository"
+import * as disciplineRepository from "../repositories/disciplineRepository";
 import { CreateTestType } from "../types/testType";
 
 export async function test(createTestData : CreateTestType){
@@ -18,3 +19,8 @@ export async function test(createTestData : CreateTestType){
         teacherDisciplineId
     })
 }
+
+export async function getTestByDiscipline(){
+    const tests = await testRepository.getTest();
+    return tests
+};

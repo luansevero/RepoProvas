@@ -11,8 +11,8 @@ beforeAll( async () => {
 
 describe("Test POST /signin", () => {
     it("Must return [200] if is right account data and login",async () => {
-        const accountData = await authFactory.__InsertUser("signin", "notRandom", "right", "right");
-        const response = await agent.post("/signin").send(accountData);
+        const user = await authFactory.__InsertUser("signin", "notRandom", "right", "right");
+        const response = await agent.post("/signin").send(user["accountData"]);
         expect(response.status).toBe(200);
     });
     it("Must return [403] if the body is in wrong format (Forget the email)", async () => {
