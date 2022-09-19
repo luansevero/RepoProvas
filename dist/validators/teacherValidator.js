@@ -31,46 +31,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signin = exports.signup = void 0;
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const dotenv_1 = __importDefault(require("dotenv"));
-const authValidator = __importStar(require("../validators/authValidator"));
-const authRepository = __importStar(require("../repositories/authRepository"));
-const bcryptUtil_1 = require("../utils/bcryptUtil");
-dotenv_1.default.config();
-function signup(createAuthData) {
+exports.findTeacher = void 0;
+const errorHandlerMiddleware_1 = require("../middlewares/errorHandlerMiddleware");
+const teacherRepository = __importStar(require("../repositories/teacherRepository"));
+function findTeacher(name) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield authValidator.newEmail(createAuthData["email"]);
-        authValidator.samePassword(createAuthData["password"], createAuthData["confirmPassword"]);
-        const password = (0, bcryptUtil_1.hashSync)(createAuthData["password"], 10);
-        yield authRepository.insert({
-            email: createAuthData["email"],
-            password
-        });
+        const teacherId = yield teacherRepository.findByName(name);
+        if (!teacherId)
+            throw new errorHandlerMiddleware_1.ErrorInfo("error_not_found", "That teacher doesn't exist");
+        return teacherId["id"];
     });
 }
-exports.signup = signup;
+exports.findTeacher = findTeacher;
 ;
-function signin(authData) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const user = yield authValidator.accountEmail(authData["email"]);
-        authValidator.passwordSync(authData["password"], user["password"]);
-        return createHeaders(user["id"]);
-    });
-}
-exports.signin = signin;
-;
-function createHeaders(userId) {
-    const token = jsonwebtoken_1.default.sign({ id: userId }, process.env.ACESS_SECRET_TOKEN, { expiresIn: process.env.TOKEN_EXPIRES_IN });
-    return {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    };
-}
-;
-//# sourceMappingURL=authService.js.map
+//# sourceMappingURL=teacherValidator.js.map

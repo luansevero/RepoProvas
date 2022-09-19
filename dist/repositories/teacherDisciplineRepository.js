@@ -9,33 +9,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.insert = exports.findById = exports.findByEmail = void 0;
+exports.findByTeacherIdAndDisciplineId = void 0;
 const database_1 = require("../config/database");
-function findByEmail(email) {
+function findByTeacherIdAndDisciplineId(teacherId_disciplineId) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield database_1.prisma.user.findUnique({
-            where: { email }
+        return yield database_1.prisma.teacherDiscipline.findUnique({
+            where: { teacherId_disciplineId },
+            select: {
+                id: true
+            }
         });
     });
 }
-exports.findByEmail = findByEmail;
-;
-function findById(id) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return yield database_1.prisma.user.findUnique({
-            where: { id }
-        });
-    });
-}
-exports.findById = findById;
-;
-function insert(authData) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return yield database_1.prisma.user.create({
-            data: authData
-        });
-    });
-}
-exports.insert = insert;
-;
-//# sourceMappingURL=authRepository.js.map
+exports.findByTeacherIdAndDisciplineId = findByTeacherIdAndDisciplineId;
+//# sourceMappingURL=teacherDisciplineRepository.js.map

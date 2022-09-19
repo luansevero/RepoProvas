@@ -10,8 +10,8 @@ function hashSync(value, saltRounds) {
 }
 exports.hashSync = hashSync;
 ;
-function compareSync(cryptValue, encryptValue) {
-    return bcrypt_1.default.compareSync(cryptValue, encryptValue);
+function compareSync(encryptValue, cryptValue) {
+    return bcrypt_1.default.compareSync(encryptValue, cryptValue);
 }
 exports.compareSync = compareSync;
 ;

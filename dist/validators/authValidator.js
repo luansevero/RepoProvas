@@ -32,7 +32,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.passwordSync = exports.accountEmail = exports.samePassword = exports.newEmail = void 0;
+exports.accountId = exports.passwordSync = exports.accountEmail = exports.samePassword = exports.newEmail = void 0;
 const authRepository = __importStar(require("../repositories/authRepository"));
 const errorHandlerMiddleware_1 = require("../middlewares/errorHandlerMiddleware");
 const bcryptUtil_1 = require("../utils/bcryptUtil");
@@ -46,10 +46,8 @@ function newEmail(email) {
 exports.newEmail = newEmail;
 ;
 function samePassword(password, confirmPassword) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (password !== confirmPassword)
-            throw new errorHandlerMiddleware_1.ErrorInfo("error_conflict", "Passwords do not match!");
-    });
+    if (password !== confirmPassword)
+        throw new errorHandlerMiddleware_1.ErrorInfo("error_conflict", "Passwords do not match!");
 }
 exports.samePassword = samePassword;
 function accountEmail(email) {
@@ -63,10 +61,17 @@ function accountEmail(email) {
 exports.accountEmail = accountEmail;
 ;
 function passwordSync(typedPassword, accountPassword) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (!(0, bcryptUtil_1.compareSync)(accountPassword, typedPassword))
-            throw new errorHandlerMiddleware_1.ErrorInfo("error_forbidden", "Invalid email our password!");
-    });
+    if (!(0, bcryptUtil_1.compareSync)(typedPassword, accountPassword))
+        throw new errorHandlerMiddleware_1.ErrorInfo("error_forbidden", "Invalid email our password!");
 }
 exports.passwordSync = passwordSync;
+;
+function accountId(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const account = yield authRepository.findById(id);
+        if (!account)
+            throw new errorHandlerMiddleware_1.ErrorInfo("error_forbidden", "Invalid token");
+    });
+}
+exports.accountId = accountId;
 //# sourceMappingURL=authValidator.js.map

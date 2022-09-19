@@ -9,33 +9,41 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.insert = exports.findById = exports.findByEmail = void 0;
+exports.getDiscipline = exports.findByName = void 0;
 const database_1 = require("../config/database");
-function findByEmail(email) {
+function findByName(name) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield database_1.prisma.user.findUnique({
-            where: { email }
+        return yield database_1.prisma.discipline.findUnique({
+            where: { name },
+            select: {
+                id: true
+            }
         });
     });
 }
-exports.findByEmail = findByEmail;
-;
-function findById(id) {
+exports.findByName = findByName;
+function getDiscipline() {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield database_1.prisma.user.findUnique({
-            where: { id }
+        return yield database_1.prisma.term.findMany({
+            select: {
+                id: true,
+                number: true,
+                discipline: {
+                    select: {
+                        id: true,
+                        name: true
+                    },
+                    orderBy: {
+                        name: "asc"
+                    }
+                }
+            },
+            orderBy: {
+                number: "asc"
+            }
         });
     });
 }
-exports.findById = findById;
+exports.getDiscipline = getDiscipline;
 ;
-function insert(authData) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return yield database_1.prisma.user.create({
-            data: authData
-        });
-    });
-}
-exports.insert = insert;
-;
-//# sourceMappingURL=authRepository.js.map
+//# sourceMappingURL=disciplineRepository.js.map

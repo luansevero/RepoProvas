@@ -31,46 +31,34 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signin = exports.signup = void 0;
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const dotenv_1 = __importDefault(require("dotenv"));
-const authValidator = __importStar(require("../validators/authValidator"));
-const authRepository = __importStar(require("../repositories/authRepository"));
-const bcryptUtil_1 = require("../utils/bcryptUtil");
-dotenv_1.default.config();
-function signup(createAuthData) {
+exports.getTestByDiscipline = exports.test = void 0;
+const categoryValidator = __importStar(require("../validators/categoryValidator"));
+const disciplineValidator = __importStar(require("../validators/disciplineValidator"));
+const teacherValidator = __importStar(require("../validators/teacherValidator"));
+const teacherDisciplineValidator = __importStar(require("../validators/teacherDisciplineValidator"));
+const testRepository = __importStar(require("../repositories/testRepository"));
+function test(createTestData) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield authValidator.newEmail(createAuthData["email"]);
-        authValidator.samePassword(createAuthData["password"], createAuthData["confirmPassword"]);
-        const password = (0, bcryptUtil_1.hashSync)(createAuthData["password"], 10);
-        yield authRepository.insert({
-            email: createAuthData["email"],
-            password
+        const categoryId = yield categoryValidator.findCategory(createTestData["category"]);
+        const teacherId = yield teacherValidator.findTeacher(createTestData["teacher"]);
+        const disciplineId = yield disciplineValidator.findDiscipline(createTestData["discipline"]);
+        const teacherDisciplineId = yield teacherDisciplineValidator.findTeacherDiscipline({ teacherId, disciplineId });
+        yield testRepository.insert({
+            name: createTestData["name"],
+            pdfUrl: createTestData["pdfUrl"],
+            categoryId,
+            teacherDisciplineId
         });
     });
 }
-exports.signup = signup;
-;
-function signin(authData) {
+exports.test = test;
+function getTestByDiscipline() {
     return __awaiter(this, void 0, void 0, function* () {
-        const user = yield authValidator.accountEmail(authData["email"]);
-        authValidator.passwordSync(authData["password"], user["password"]);
-        return createHeaders(user["id"]);
+        const tests = yield testRepository.getTest();
+        return tests;
     });
 }
-exports.signin = signin;
+exports.getTestByDiscipline = getTestByDiscipline;
 ;
-function createHeaders(userId) {
-    const token = jsonwebtoken_1.default.sign({ id: userId }, process.env.ACESS_SECRET_TOKEN, { expiresIn: process.env.TOKEN_EXPIRES_IN });
-    return {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    };
-}
-;
-//# sourceMappingURL=authService.js.map
+//# sourceMappingURL=testService.js.map

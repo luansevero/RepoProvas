@@ -31,6 +31,7 @@ require("express-async-errors");
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const routers_1 = __importDefault(require("./routers"));
+require("./config/config");
 const errorHandlerMiddleware_1 = require("./middlewares/errorHandlerMiddleware");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
@@ -38,6 +39,5 @@ app.use((0, cors_1.default)());
 app.use((0, express_1.json)());
 app.use(routers_1.default);
 app.use(errorHandlerMiddleware_1.errorHandler);
-const PORT = Number(process.env.PORT) || 5000;
-app.listen(PORT, () => { console.log(`Server listening on ${PORT}`); });
-//# sourceMappingURL=index.js.map
+exports.default = app;
+//# sourceMappingURL=app.js.map
